@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none';">
+    <title>Secure Password Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <header class="header">
+                <h1 class="title">Secure Password Generator</h1>
+                <p class="subtitle">Crypto-grade randomness with Fisher-Yates shuffle</p>
+            </header>
+
+            <main class="main-content">
+                <!-- Password Output Section -->
+                <section class="password-section" aria-labelledby="password-label">
+                    <label id="password-label" for="password-output" class="section-label">Generated Password</label>
+                    <div class="password-container">
+                        <input 
+                            type="text" 
+                            id="password-output" 
+                            class="password-field" 
+                            readonly 
+                            placeholder="Your secure password will appear here"
+                            aria-describedby="password-description"
+                        >
+                        <div id="password-description" class="sr-only">Generated password using cryptographically secure randomness</div>
+                    </div>
+                </section>
+
+                <!-- Strength Indicator Section -->
+                <section class="strength-section" aria-labelledby="strength-label">
+                    <label id="strength-label" class="section-label">Password Strength</label>
+                    <div class="strength-indicator">
+                        <div class="strength-bar-container">
+                            <div id="strength-bar" class="strength-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                        </div>
+                        <div class="strength-info">
+                            <span id="strength-text" class="strength-text">No password generated</span>
+                            <span id="entropy-bits" class="entropy-bits"></span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Configuration Section -->
+                <section class="config-section" aria-labelledby="config-label">
+                    <h2 id="config-label" class="section-label">Configuration</h2>
+                    
+                    <!-- Password Length -->
+                    <div class="input-group">
+                        <label for="password-length" class="input-label">Password Length</label>
+                        <div class="length-input-container">
+                            <input 
+                                type="number" 
+                                id="password-length" 
+                                class="length-input" 
+                                min="8" 
+                                max="128" 
+                                value="16"
+                                aria-describedby="length-description"
+                            >
+                            <span id="length-description" class="input-description">8-128 characters</span>
+                        </div>
+                    </div>
+
+                    <!-- Character Types -->
+                    <fieldset class="character-types">
+                        <legend class="fieldset-legend">Character Types</legend>
+                        <div class="checkbox-grid">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="include-lowercase" class="checkbox" checked>
+                                <label for="include-lowercase" class="checkbox-label">Lowercase (a-z)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="include-uppercase" class="checkbox" checked>
+                                <label for="include-uppercase" class="checkbox-label">Uppercase (A-Z)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="include-numbers" class="checkbox" checked>
+                                <label for="include-numbers" class="checkbox-label">Numbers (0-9)</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="include-symbols" class="checkbox" checked>
+                                <label for="include-symbols" class="checkbox-label">Symbols (!@#$...)</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Options -->
+                    <fieldset class="options">
+                        <legend class="fieldset-legend">Options</legend>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="exclude-ambiguous" class="checkbox">
+                            <label for="exclude-ambiguous" class="checkbox-label">
+                                Exclude ambiguous characters
+                                <span class="option-description">(O, 0, l, 1, I)</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </section>
+
+                <!-- Action Buttons -->
+                <section class="actions-section">
+                    <div class="button-group">
+                        <button id="generate-btn" class="btn btn-primary" type="button">
+                            <span class="btn-text">Generate Password</span>
+                        </button>
+                        <button id="copy-btn" class="btn btn-secondary" type="button" disabled>
+                            <span class="btn-text">Copy Password</span>
+                        </button>
+                        <button id="clear-btn" class="btn btn-tertiary" type="button">
+                            <span class="btn-text">Clear</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Copy Feedback -->
+                <div id="copy-feedback" class="copy-feedback" role="status" aria-live="polite"></div>
+            </main>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
